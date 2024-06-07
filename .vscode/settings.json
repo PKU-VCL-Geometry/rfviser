@@ -1,6 +1,20 @@
 {
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/__pycache__/": true,
+    "**/.ipynb_checkpoints": true,
+    "**/*.ipynb": true,
+    "**/temp*": true
   },
-  "python.formatting.provider": "none"
+  "[python]": {
+      "editor.defaultFormatter": "ms-python.black-formatter",
+      "editor.codeActionsOnSave": {
+          "source.organizeImports.ruff": "explicit",
+          "source.fixAll.ruff": "explicit"
+      }
+  },
+  "editor.rulers": [120],
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.diagnosticMode": "openFilesOnly"
 }
