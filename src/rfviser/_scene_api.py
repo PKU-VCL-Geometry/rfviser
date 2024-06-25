@@ -419,7 +419,7 @@ class SceneApi:
         field of view of a camera. It's helpful for understanding the perspective
         and coverage of a camera in the 3D space.
 
-        Like all cameras in the viser Python API, frustums follow the OpenCV [+Z forward,
+        Like all cameras in the rfviser Python API, frustums follow the OpenCV [+Z forward,
         +X right, +Y down] convention. fov is vertical in radians; aspect is width over height
 
         Args:

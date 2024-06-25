@@ -4,8 +4,8 @@ Requires yourdfpy and robot_descriptions. Any URDF supported by yourdfpy should 
 - https://github.com/robot-descriptions/robot_descriptions.py
 - https://github.com/clemense/yourdfpy
 
-The :class:`viser.extras.ViserUrdf` is a lightweight interface between yourdfpy
-and viser. It can also take a path to a local URDF file as input.
+The :class:`rfviser.extras.ViserUrdf` is a lightweight interface between yourdfpy
+and rfviser. It can also take a path to a local URDF file as input.
 """
 
 from __future__ import annotations
@@ -13,11 +13,10 @@ from __future__ import annotations
 import time
 
 import numpy as onp
+import rfviser
 import tyro
+from rfviser.extras import ViserUrdf
 from robot_descriptions.loaders.yourdfpy import load_robot_description
-
-import viser
-from viser.extras import ViserUrdf
 
 # A subset of robots available in the robot_descriptions package.
 ROBOT_MODEL_LIST = (
@@ -42,11 +41,11 @@ ROBOT_MODEL_LIST = (
 
 
 def main() -> None:
-    # Start viser server.
-    server = viser.ViserServer()
+    # Start rfviser server.
+    server = rfviser.ViserServer()
 
     # Logic for updating the visualized robot.
-    gui_joints: list[viser.GuiInputHandle[float]] = []
+    gui_joints: list[rfviser.GuiInputHandle[float]] = []
     initial_angles: list[float] = []
 
     def update_robot_model(robot_name: str) -> None:

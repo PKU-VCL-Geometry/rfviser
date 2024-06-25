@@ -39,12 +39,14 @@ class MatrixLieGroup(abc.ABC):
     # Shared implementations.
 
     @overload
-    def __matmul__(self, other: Self) -> Self: ...
+    def __matmul__(self, other: Self) -> Self:
+        ...
 
     @overload
     def __matmul__(
         self, other: onpt.NDArray[onp.floating]
-    ) -> onpt.NDArray[onp.floating]: ...
+    ) -> onpt.NDArray[onp.floating]:
+        ...
 
     def __matmul__(
         self, other: Union[Self, onpt.NDArray[onp.floating]]

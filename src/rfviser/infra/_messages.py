@@ -31,14 +31,16 @@ def _prepare_for_deserialization(value: Any, annotation: Type) -> Any:
         if len(args) >= 2 and args[1] == ...:
             args = (args[0],) * len(value)
         elif len(value) != len(args):
-            warnings.warn(f"[viser] {value} does not match annotation {annotation}")
+            warnings.warn(f"[rfviser] {value} does not match annotation {annotation}")
             return value
 
         for i, v in enumerate(value):
             out.append(
                 # Hack to be OK with wrong type annotations.
                 # https://github.com/nerfstudio-project/nerfstudio/pull/1805
-                _prepare_for_deserialization(v, args[i]) if i < len(args) else v
+                _prepare_for_deserialization(v, args[i])
+                if i < len(args)
+                else v
             )
         return tuple(out)
     return value
@@ -70,7 +72,7 @@ def _prepare_for_serialization(value: Any, annotation: object) -> Any:
             if len(args) >= 2 and args[1] == ...:
                 args = (args[0],) * len(value)
             elif len(value) != len(args):
-                warnings.warn(f"[viser] {value} does not match annotation {annotation}")
+                warnings.warn(f"[rfviser] {value} does not match annotation {annotation}")
                 return value
         else:
             args = [Any] * len(value)
@@ -79,7 +81,9 @@ def _prepare_for_serialization(value: Any, annotation: object) -> Any:
             out.append(
                 # Hack to be OK with wrong type annotations.
                 # https://github.com/nerfstudio-project/nerfstudio/pull/1805
-                _prepare_for_serialization(v, args[i]) if i < len(args) else v
+                _prepare_for_serialization(v, args[i])
+                if i < len(args)
+                else v
             )
         return tuple(out)
 

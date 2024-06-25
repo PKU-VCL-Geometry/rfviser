@@ -6,12 +6,11 @@ Make a ball with some random splines.
 import time
 
 import numpy as onp
-
-import viser
+import rfviser
 
 
 def main() -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
     for i in range(10):
         positions = onp.random.normal(size=(30, 3)) * 3.0
         server.scene.add_spline_catmull_rom(

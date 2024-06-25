@@ -6,15 +6,14 @@ import time
 from typing import Literal
 
 import numpy as onp
+import rfviser
+import rfviser.transforms as tf
 import trimesh.creation
 from typing_extensions import assert_never
 
-import viser
-import viser.transforms as tf
-
 
 def main() -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
     server.gui.configure_theme(dark_mode=True)
     play_connect_4(server)
 
@@ -25,7 +24,7 @@ def main() -> None:
         time.sleep(10.0)
 
 
-def play_connect_4(server: viser.ViserServer) -> None:
+def play_connect_4(server: rfviser.ViserServer) -> None:
     """Play a game of Connect 4."""
     server.scene.reset()
 
@@ -85,7 +84,7 @@ def play_connect_4(server: viser.ViserServer) -> None:
         setup_column(col)
 
 
-def play_tic_tac_toe(server: viser.ViserServer) -> None:
+def play_tic_tac_toe(server: rfviser.ViserServer) -> None:
     """Play a game of tic-tac-toe."""
     server.scene.reset()
 

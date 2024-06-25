@@ -7,9 +7,10 @@ import time
 import numpy as onp
 import plotly.express as px
 import plotly.graph_objects as go
+import rfviser
 from PIL import Image
 
-import viser
+import rfviser
 
 
 def create_sinusoidal_wave(t: float) -> go.Figure:
@@ -34,7 +35,7 @@ def create_sinusoidal_wave(t: float) -> go.Figure:
 
 
 def main() -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     # Plot type 1: Line plot.
     line_plot_time = 0.0

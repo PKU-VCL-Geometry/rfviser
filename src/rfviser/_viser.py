@@ -28,12 +28,12 @@ from .infra._infra import RecordHandle
 
 
 class _BackwardsCompatibilityShim:
-    """Shims for backward compatibility with viser API from version
+    """Shims for backward compatibility with rfviser API from version
     `<=0.1.30`."""
 
     def __getattr__(self, name: str) -> Any:
         fixed_name = {
-            # Map from old method names (viser v0.1.*) to new methods names.
+            # Map from old method names (rfviser v0.1.*) to new methods names.
             "reset_scene": "reset",
             "set_global_scene_node_visibility": "set_global_visibility",
             "on_scene_pointer": "on_pointer_event",
@@ -43,7 +43,7 @@ class _BackwardsCompatibilityShim:
         }.get(name, name)
         if hasattr(self.scene, fixed_name):
             warnings.warn(
-                f"{type(self).__name__}.{name} has been deprecated, use {type(self).__name__}.scene.{fixed_name} instead. Alternatively, pin to `viser<0.2.0`.",
+                f"{type(self).__name__}.{name} has been deprecated, use {type(self).__name__}.scene.{fixed_name} instead. Alternatively, pin to `rfviser<0.2.0`.",
                 category=DeprecationWarning,
                 stacklevel=2,
             )
@@ -52,7 +52,7 @@ class _BackwardsCompatibilityShim:
         fixed_name = name.replace("add_gui_", "add_").replace("set_gui_", "set_")
         if hasattr(self.gui, fixed_name):
             warnings.warn(
-                f"{type(self).__name__}.{name} has been deprecated, use {type(self).__name__}.gui.{fixed_name} instead. Alternatively, pin to `viser<0.2.0`.",
+                f"{type(self).__name__}.{name} has been deprecated, use {type(self).__name__}.gui.{fixed_name} instead. Alternatively, pin to `rfviser<0.2.0`.",
                 category=DeprecationWarning,
                 stacklevel=2,
             )
@@ -431,7 +431,7 @@ class ClientHandle(_BackwardsCompatibilityShim if not TYPE_CHECKING else object)
 
 
 class ViserServer(_BackwardsCompatibilityShim if not TYPE_CHECKING else object):
-    """:class:`ViserServer` is the main class for working with viser. On
+    """:class:`ViserServer` is the main class for working with rfviser. On
     instantiation, it (a) launches a thread with a web server and (b) provides
     a high-level API for interactive 3D visualization.
 
@@ -562,7 +562,7 @@ class ViserServer(_BackwardsCompatibilityShim if not TYPE_CHECKING else object):
         )
         table.add_row("HTTP", http_url)
         table.add_row("Websocket", ws_url)
-        rich.print(Panel(table, title="[bold]viser[/bold]", expand=False))
+        rich.print(Panel(table, title="[bold]rfviser[/bold]", expand=False))
 
         self._share_tunnel: ViserTunnel | None = None
 
@@ -612,17 +612,17 @@ class ViserServer(_BackwardsCompatibilityShim if not TYPE_CHECKING else object):
         else:
             # Create a new tunnel!.
             if verbose:
-                rich.print("[bold](viser)[/bold] Share URL requested!")
+                rich.print("[bold](rfviser)[/bold] Share URL requested!")
 
             connect_event = threading.Event()
 
             self._share_tunnel = ViserTunnel(
-                "share.viser.studio", self._websock_server._port
+                "share.rfviser.studio", self._websock_server._port
             )
 
             @self._share_tunnel.on_disconnect
             def _() -> None:
-                rich.print("[bold](viser)[/bold] Disconnected from share URL")
+                rich.print("[bold](rfviser)[/bold] Disconnected from share URL")
                 self._share_tunnel = None
                 self._websock_server.unsafe_send_message(
                     _messages.ShareUrlUpdated(None)
@@ -634,10 +634,12 @@ class ViserServer(_BackwardsCompatibilityShim if not TYPE_CHECKING else object):
                 share_url = self._share_tunnel.get_url()
                 if verbose:
                     if share_url is None:
-                        rich.print("[bold](viser)[/bold] Could not generate share URL")
+                        rich.print(
+                            "[bold](rfviser)[/bold] Could not generate share URL"
+                        )
                     else:
                         rich.print(
-                            f"[bold](viser)[/bold] Generated share URL (expires in 24 hours, max {max_clients} clients): {share_url}"
+                            f"[bold](rfviser)[/bold] Generated share URL (expires in 24 hours, max {max_clients} clients): {share_url}"
                         )
                 self._websock_server.unsafe_send_message(
                     _messages.ShareUrlUpdated(share_url)
@@ -655,7 +657,7 @@ class ViserServer(_BackwardsCompatibilityShim if not TYPE_CHECKING else object):
             self._share_tunnel.close()
         else:
             rich.print(
-                "[bold](viser)[/bold] Tried to disconnect from share URL, but already disconnected"
+                "[bold](rfviser)[/bold] Tried to disconnect from share URL, but already disconnected"
             )
 
     def stop(self) -> None:
@@ -685,7 +687,7 @@ class ViserServer(_BackwardsCompatibilityShim if not TYPE_CHECKING else object):
         # Trigger callback on any already-connected clients.
         # If we have:
         #
-        #     server = viser.ViserServer()
+        #     server = rfviser.ViserServer()
         #     server.on_client_connect(...)
         #
         # This makes sure that the the callback is applied to any clients that

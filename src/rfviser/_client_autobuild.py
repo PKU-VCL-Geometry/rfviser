@@ -15,7 +15,7 @@ def _check_viser_yarn_running() -> bool:
 
     for process in psutil.process_iter():
         try:
-            if Path(process.cwd()).as_posix().endswith("viser/client") and any(
+            if Path(process.cwd()).as_posix().endswith("rfviser/client") and any(
                 [part.endswith("yarn") for part in process.cmdline()]
                 + [part.endswith("yarn.js") for part in process.cmdline()]
             ):
@@ -41,12 +41,12 @@ def ensure_client_is_built() -> None:
     if _check_viser_yarn_running():
         # Don't run `yarn build` if `yarn start` is already running.
         rich.print(
-            "[bold](viser)[/bold] The Viser viewer looks like it has been launched via"
+            "[bold](rfviser)[/bold] The Viser viewer looks like it has been launched via"
             " `yarn start`. Skipping build check..."
         )
         build = False
     elif not (build_dir / "index.html").exists():
-        rich.print("[bold](viser)[/bold] No client build found. Building now...")
+        rich.print("[bold](rfviser)[/bold] No client build found. Building now...")
         build = True
     elif (
         # We should be at least 10 seconds newer than the last build.
@@ -56,7 +56,7 @@ def ensure_client_is_built() -> None:
         > _modified_time_recursive(build_dir) + 10.0
     ):
         rich.print(
-            "[bold](viser)[/bold] Client build looks out of date. Building now..."
+            "[bold](rfviser)[/bold] Client build looks out of date. Building now..."
         )
         build = True
 
@@ -104,7 +104,7 @@ def _install_sandboxed_node() -> Path:
 
     node_bin_dir = get_node_bin_dir()
     if (node_bin_dir / "npx").exists():
-        rich.print("[bold](viser)[/bold] nodejs is set up!")
+        rich.print("[bold](rfviser)[/bold] nodejs is set up!")
         return node_bin_dir
 
     env_dir = client_dir / ".nodeenv"

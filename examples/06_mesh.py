@@ -7,10 +7,9 @@ import time
 from pathlib import Path
 
 import numpy as onp
+import rfviser
+import rfviser.transforms as tf
 import trimesh
-
-import viser
-import viser.transforms as tf
 
 mesh = trimesh.load_mesh(str(Path(__file__).parent / "assets/dragon.obj"))
 assert isinstance(mesh, trimesh.Trimesh)
@@ -20,7 +19,7 @@ vertices = mesh.vertices
 faces = mesh.faces
 print(f"Loaded mesh with {vertices.shape} vertices, {faces.shape} faces")
 
-server = viser.ViserServer()
+server = rfviser.ViserServer()
 server.scene.add_mesh_simple(
     name="/simple",
     vertices=vertices,

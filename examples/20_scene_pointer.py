@@ -13,15 +13,14 @@ from pathlib import Path
 from typing import cast
 
 import numpy as onp
+import rfviser
+import rfviser.transforms as tf
+from rfviser.theme import TitlebarConfig
 import trimesh
 import trimesh.creation
 import trimesh.ray
 
-import viser
-import viser.transforms as tf
-from viser.theme import TitlebarConfig
-
-server = viser.ViserServer()
+server = rfviser.ViserServer()
 server.gui.configure_theme(
     brand_color=(130, 0, 150),
     titlebar_content=TitlebarConfig(buttons=(), image=None),
@@ -39,25 +38,25 @@ mesh_handle = server.scene.add_mesh_trimesh(
     position=(0.0, 0.0, 0.0),
 )
 
-hit_pos_handles: list[viser.GlbHandle] = []
+hit_pos_handles: list[rfviser.GlbHandle] = []
 
 
 # Buttons + callbacks will operate on a per-client basis, but will modify the global scene! :)
 @server.on_client_connect
-def _(client: viser.ClientHandle) -> None:
+def _(client: rfviser.ClientHandle) -> None:
     # Set up the camera -- this gives a nice view of the full mesh.
     client.camera.position = onp.array([0.0, 0.0, -10.0])
     client.camera.wxyz = onp.array([0.0, 0.0, 0.0, 1.0])
 
     # Tests "click" scenepointerevent.
-    click_button_handle = client.gui.add_button("Add sphere", icon=viser.Icon.POINTER)
+    click_button_handle = client.gui.add_button("Add sphere", icon=rfviser.Icon.POINTER)
 
     @click_button_handle.on_click
     def _(_):
         click_button_handle.disabled = True
 
         @client.scene.on_pointer_event(event_type="click")
-        def _(event: viser.ScenePointerEvent) -> None:
+        def _(event: rfviser.ScenePointerEvent) -> None:
             # Check for intersection with the mesh, using trimesh's ray-mesh intersection.
             # Note that mesh is in the mesh frame, so we need to transform the ray.
             R_world_mesh = tf.SO3(mesh_handle.wxyz)
@@ -88,14 +87,14 @@ def _(client: viser.ClientHandle) -> None:
             click_button_handle.disabled = False
 
     # Tests "rect-select" scenepointerevent.
-    paint_button_handle = client.gui.add_button("Paint mesh", icon=viser.Icon.PAINT)
+    paint_button_handle = client.gui.add_button("Paint mesh", icon=rfviser.Icon.PAINT)
 
     @paint_button_handle.on_click
     def _(_):
         paint_button_handle.disabled = True
 
         @client.scene.on_pointer_event(event_type="rect-select")
-        def _(message: viser.ScenePointerEvent) -> None:
+        def _(message: rfviser.ScenePointerEvent) -> None:
             client.scene.remove_pointer_callback()
 
             global mesh_handle
@@ -145,7 +144,7 @@ def _(client: viser.ClientHandle) -> None:
             paint_button_handle.disabled = False
 
     # Button to clear spheres.
-    clear_button_handle = client.gui.add_button("Clear scene", icon=viser.Icon.X)
+    clear_button_handle = client.gui.add_button("Clear scene", icon=rfviser.Icon.X)
 
     @clear_button_handle.on_click
     def _(_):

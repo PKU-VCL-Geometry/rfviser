@@ -23,7 +23,7 @@ jobs:
           uv pip install --system -e ".[dev]"
           uv pip install --system build twine
           # Build client files.
-          python -c "import viser; viser.ViserServer()"
+          python -c "import rfviser; rfviser.ViserServer()"
       - name: Strip unsupported tags in README
         run: |
           sed -i '/<!-- pypi-strip -->/,/<!-- \/pypi-strip -->/d' README.md

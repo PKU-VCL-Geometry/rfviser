@@ -3,16 +3,16 @@
 import pathlib
 import subprocess
 
-import viser.infra
-from viser._messages import Message
+import rfviser.infra
+from rfviser._messages import Message
 
 if __name__ == "__main__":
     # Generate typescript source.
-    defs = viser.infra.generate_typescript_interfaces(Message)
+    defs = rfviser.infra.generate_typescript_interfaces(Message)
 
     # Write to file.
     target_path = pathlib.Path(__file__).parent / pathlib.Path(
-        "src/viser/client/src/WebsocketMessages.tsx"
+        "src/rfviser/client/src/WebsocketMessages.tsx"
     )
     assert target_path.exists()
     target_path.write_text(defs)

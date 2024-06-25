@@ -205,7 +205,7 @@ StringType = TypeVar("StringType", bound=str)
 # are slightly different: we have `on_click()` instead of `on_update()`.
 @dataclasses.dataclass
 class GuiInputHandle(_GuiInputHandle[T], Generic[T]):
-    """A handle is created for each GUI element that is added in `viser`.
+    """A handle is created for each GUI element that is added in `rfviser`.
     Handles can be used to read and write state.
 
     When a GUI element is added via :attr:`ViserServer.gui`, state is
@@ -527,7 +527,7 @@ def _get_data_url(url: str, image_root: Path | None) -> str:
     if not url.startswith("http") and not image_root:
         warnings.warn(
             (
-                "No `image_root` provided. All relative paths will be scoped to viser's"
+                "No `image_root` provided. All relative paths will be scoped to rfviser's"
                 " installation path."
             ),
             stacklevel=2,

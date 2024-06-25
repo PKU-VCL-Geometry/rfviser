@@ -4,14 +4,14 @@ Examples of using modals in Viser."""
 
 import time
 
-import viser
+import rfviser
 
 
 def main():
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     @server.on_client_connect
-    def _(client: viser.ClientHandle) -> None:
+    def _(client: rfviser.ClientHandle) -> None:
         with client.gui.add_modal("Modal example"):
             client.gui.add_markdown(
                 "**The input below determines the title of the modal...**"

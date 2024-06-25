@@ -60,11 +60,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/build
           destination_dir: ${{ env.DOCS_SUBDIR }}
-          keep_files: false # This will only erase the destination subdirectory.
-          cname: viser.studio
+          keep_files: false  # This will only erase the destination subdirectory.
+          cname: rfviser.studio
         if: github.event_name != 'pull_request'
 
-      # We'll maintain an index of all versions under viser.studio/versions.
+      # We'll maintain an index of all versions under rfviser.studio/versions.
       # This will be useful for dynamically generating lists of possible doc links.
       - name: Update versions index.txt
         run: |

@@ -11,12 +11,11 @@ from pathlib import Path
 
 import imageio.v3 as iio
 import numpy as onp
-
-import viser
+import rfviser
 
 
 def main() -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     # Add a background image.
     server.scene.set_background_image(

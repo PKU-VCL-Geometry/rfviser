@@ -5,8 +5,8 @@
 Viser has full support for the GFM markdown spec, including **bold**, _italics_,
 ~~strikethrough~~, and many other features.
 
-Here's a [masked link](https://github.com/nerfstudio-project/viser). Not a fan?
-Here's a normal one: https://pypi.org/project/viser/
+Here's a [masked link](https://github.com/nerfstudio-project/rfviser). Not a fan?
+Here's a normal one: https://pypi.org/project/rfviser/
 
 Anywhere where you can insert GUI elements, you can also insert `images`,
 `blockquotes`, `lists`, `tables`, `task lists`, and `(unstyled) code blocks`.
@@ -28,10 +28,10 @@ to the directory that Viser is installed in.
 
 Tables follow the standard markdown spec:
 
-| Application                                          | Description                                        |
-| ---------------------------------------------------- | -------------------------------------------------- |
-| [NS](https://nerf.studio)                            | A collaboration friendly studio for NeRFs          |
-| [Viser](https://nerfstudio-project.github.io/viser/) | An interactive 3D visualization toolbox for Python |
+| Application                                            | Description                                        |
+| ------------------------------------------------------ | -------------------------------------------------- |
+| [NS](https://nerf.studio)                              | A collaboration friendly studio for NeRFs          |
+| [Viser](https://nerfstudio-project.github.io/rfviser/) | An interactive 3D visualization toolbox for Python |
 
 Code blocks, while being not nearly as exciting as some of the things presented,
 work as expected. Currently, while you can specify a language and metadata in
@@ -46,14 +46,14 @@ Viser GUI has MDX 2 support.
 import time
 from pathlib import Path
 
-import viser
+import rfviser
 
-server = viser.ViserServer()
+server = rfviser.ViserServer()
 server.world_axes.visible = True
 
 
 @server.on_client_connect
-def _(client: viser.ClientHandle) -> None:
+def _(client: rfviser.ClientHandle) -> None:
     with open("./assets/mdx_example.mdx", "r") as mkdn:
         markdown = client.gui.add_markdown(
             markdown=mkdn.read(), image_root=Path(__file__).parent

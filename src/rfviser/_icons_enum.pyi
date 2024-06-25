@@ -3,7 +3,7 @@
 from typing import NewType
 
 IconName = NewType("IconName", str)
-"""Name of an icon. Should be generated via `viser.Icon.*`."""
+"""Name of an icon. Should be generated via `rfviser.Icon.*`."""
 
 class Icon:
     """'Enum' class for referencing Tabler icons.

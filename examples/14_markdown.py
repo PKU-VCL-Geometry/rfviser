@@ -6,9 +6,9 @@ Viser GUI has MDX 2 support.
 import time
 from pathlib import Path
 
-import viser
+import rfviser
 
-server = viser.ViserServer()
+server = rfviser.ViserServer()
 server.scene.world_axes.visible = True
 
 markdown_counter = server.gui.add_markdown("Counter: 0")

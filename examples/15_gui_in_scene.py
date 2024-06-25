@@ -9,17 +9,15 @@ import time
 from typing import Optional
 
 import numpy as onp
+import rfviser
+import rfviser.transforms as tf
 
-import viser
-import viser.transforms as tf
-
-server = viser.ViserServer()
-server.gui.configure_theme(dark_mode=True)
+server = rfviser.ViserServer()
 num_frames = 20
 
 
 @server.on_client_connect
-def _(client: viser.ClientHandle) -> None:
+def _(client: rfviser.ClientHandle) -> None:
     """For each client that connects, we create a set of random frames + a click handler for each frame.
 
     When a frame is clicked, we display a 3D gui node.
@@ -27,7 +25,7 @@ def _(client: viser.ClientHandle) -> None:
 
     rng = onp.random.default_rng(0)
 
-    displayed_3d_container: Optional[viser.Gui3dContainerHandle] = None
+    displayed_3d_container: Optional[rfviser.Gui3dContainerHandle] = None
 
     def make_frame(i: int) -> None:
         # Sample a random orientation + position.

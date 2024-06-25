@@ -18,7 +18,7 @@ from typing_extensions import (
     get_type_hints,
 )
 
-from viser import theme
+from rfviser import theme
 
 from . import _messages
 from ._gui_handles import (
@@ -154,7 +154,7 @@ class _FileUploadState(TypedDict):
 
 
 class GuiApi:
-    """Interface for working with the 2D GUI in viser.
+    """Interface for working with the 2D GUI in rfviser.
 
     Used by both our global server object, for sharing the same GUI elements
     with all clients, and by individual client handles."""
@@ -366,7 +366,7 @@ class GuiApi:
         show_share_button: bool = True,
         brand_color: tuple[int, int, int] | None = None,
     ) -> None:
-        """Configures the visual appearance of the viser front-end.
+        """Configures the visual appearance of the rfviser front-end.
 
         Args:
             titlebar_content: Optional configuration for the title bar.

@@ -8,7 +8,7 @@ import numpy as onp
 import trimesh
 import yourdfpy
 
-import viser
+import rfviser
 
 from .. import transforms as tf
 
@@ -26,7 +26,7 @@ class ViserUrdf:
 
     def __init__(
         self,
-        target: viser.ViserServer | viser.ClientHandle,
+        target: rfviser.ViserServer | rfviser.ClientHandle,
         urdf_or_path: yourdfpy.URDF | Path,
         scale: float = 1.0,
         root_node_name: str = "/",
@@ -52,7 +52,7 @@ class ViserUrdf:
         self._root_node_name = root_node_name
 
         # Add coordinate frame for each joint.
-        self._joint_frames: List[viser.SceneNodeHandle] = []
+        self._joint_frames: List[rfviser.SceneNodeHandle] = []
         for joint in self._urdf.joint_map.values():
             assert isinstance(joint, yourdfpy.Joint)
             self._joint_frames.append(
@@ -64,7 +64,7 @@ class ViserUrdf:
                 )
             )
 
-        # Add the URDF's meshes/geometry to viser.
+        # Add the URDF's meshes/geometry to rfviser.
         for link_name, mesh in urdf.scene.geometry.items():
             assert isinstance(mesh, trimesh.Trimesh)
             T_parent_child = urdf.get_transform(
@@ -130,7 +130,7 @@ def _viser_name_from_frame(
     root_node_name: str = "/",
 ) -> str:
     """Given the (unique) name of a frame in our URDF's kinematic tree, return a
-    scene node name for viser.
+    scene node name for rfviser.
 
     For a robot manipulator with four frames, that looks like:
 

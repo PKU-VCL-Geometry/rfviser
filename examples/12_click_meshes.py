@@ -6,13 +6,12 @@ Click on meshes to select them. The index of the last clicked mesh is displayed 
 import time
 
 import matplotlib
-
-import viser
+import rfviser
 
 
 def main() -> None:
     grid_shape = (4, 5)
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     with server.gui.add_folder("Last clicked"):
         x_value = server.gui.add_number(

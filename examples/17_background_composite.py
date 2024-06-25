@@ -7,12 +7,11 @@ be useful when we want a 2D image to occlude 3D geometry, such as for NeRF rende
 import time
 
 import numpy as onp
+import rfviser
 import trimesh
 import trimesh.creation
 
-import viser
-
-server = viser.ViserServer()
+server = rfviser.ViserServer()
 
 
 img = onp.random.randint(0, 255, size=(1000, 1000, 3), dtype=onp.uint8)

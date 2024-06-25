@@ -130,7 +130,7 @@ class ViewerCameraMessage(Message):
     up_direction: Tuple[float, float, float]
 
 
-# The list of scene pointer events supported by the viser frontend.
+# The list of scene pointer events supported by the rfviser frontend.
 ScenePointerEventType = Literal["click", "rect-select"]
 
 

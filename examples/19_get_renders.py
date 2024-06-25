@@ -6,17 +6,16 @@ import time
 
 import imageio.v3 as iio
 import numpy as onp
-
-import viser
+import rfviser
 
 
 def main():
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     button = server.gui.add_button("Render a GIF")
 
     @button.on_click
-    def _(event: viser.GuiEvent) -> None:
+    def _(event: rfviser.GuiEvent) -> None:
         client = event.client
         assert client is not None
 

@@ -3,7 +3,7 @@ import time
 from pathlib import Path
 
 import numpy as onp
-import viser
+import rfviser
 
 
 def main() -> None:
@@ -17,7 +17,7 @@ def main() -> None:
         for key, value in data["c2w"].items()
     }
 
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     with server.gui.add_folder("Image Viewer"):
         # add an imageviewer for testing

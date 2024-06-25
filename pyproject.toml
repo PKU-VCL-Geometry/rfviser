@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "viser"
+name = "rfviser"
 version = "0.2.4"
 description = "3D visualization + Python"
 readme = "README.md"
@@ -53,11 +53,11 @@ examples = [
 ]
 
 [project.urls]
-"GitHub" = "https://github.com/nerfstudio-project/viser"
+"GitHub" = "https://github.com/PKU-VCL-Geometry/rfviser"
 
 # <>
 # Important: in the ./.github/workflows/publish.yml action, we have sed
-# commands that assume the `viser = ...` line below directly follows
+# commands that assume the `rfviser = ...` line below directly follows
 # `[tool.setuptools.package-data]`. We use this to remove the client source
 # from PyPI builds.
 #
@@ -68,7 +68,7 @@ examples = [
 # installation via the Git URL, because build artifacts aren't
 # version-controlled.
 [tool.setuptools.package-data]
-viser = ["py.typed", "*.pyi", "_icons/tabler-icons.tar", "client/**/*", "client/**/.*"]
+rfviser = ["py.typed", "*.pyi", "_icons/tabler-icons.tar", "client/**/*", "client/**/.*"]
 # </>
 
 [tool.setuptools.exclude-package-data]
@@ -79,10 +79,10 @@ viser = ["py.typed", "*.pyi", "_icons/tabler-icons.tar", "client/**/*", "client/
 viser = ["**/node_modules/**"]
 
 [project.scripts]
-viser-dev-checks = "viser.scripts.dev_checks:entrypoint"
+rfviser-dev-checks = "rfviser.scripts.dev_checks:entrypoint"
 
 [tool.pyright]
-exclude = ["./docs/**/*", "./examples/assets/**/*", "./src/viser/client/.nodeenv", "./build"]
+exclude = ["./docs/**/*", "./examples/assets/**/*", "./src/rfviser/client/.nodeenv", "./build"]
 
 [tool.ruff]
 select = [

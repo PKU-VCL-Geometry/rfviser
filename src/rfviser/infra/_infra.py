@@ -139,7 +139,8 @@ class WebsockMessageHandler:
                 cb(client_id, message)
 
     @abc.abstractmethod
-    def unsafe_send_message(self, message: Message) -> None: ...
+    def unsafe_send_message(self, message: Message) -> None:
+        ...
 
     def queue_message(self, message: Message) -> None:
         """Wrapped method for sending messages safely."""
@@ -340,7 +341,7 @@ class WebsockServer(WebsockMessageHandler):
 
             if self._verbose:
                 rich.print(
-                    f"[bold](viser)[/bold] Connection opened ({client_id},"
+                    f"[bold](rfviser)[/bold] Connection opened ({client_id},"
                     f" {total_connections} total),"
                     f" {len(self._broadcast_buffer.message_from_id)} persistent"
                     " messages"
@@ -412,7 +413,7 @@ class WebsockServer(WebsockMessageHandler):
                 total_connections -= 1
                 if self._verbose:
                     rich.print(
-                        f"[bold](viser)[/bold] Connection closed ({client_id},"
+                        f"[bold](rfviser)[/bold] Connection closed ({client_id},"
                         f" {total_connections} total)"
                     )
 
@@ -493,7 +494,7 @@ class WebsockServer(WebsockMessageHandler):
 
         # This will run only when the event loop ends, which happens when the
         # websocket server is closed.
-        rich.print("[bold](viser)[/bold] Server stopped")
+        rich.print("[bold](rfviser)[/bold] Server stopped")
 
 
 async def _message_producer(

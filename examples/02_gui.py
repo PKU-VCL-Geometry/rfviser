@@ -5,12 +5,11 @@ Examples of basic GUI elements that we can create, read from, and write to."""
 import time
 
 import numpy as onp
-
-import viser
+import rfviser
 
 
 def main() -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     # Add some common GUI elements: number inputs, sliders, vectors, checkboxes.
     with server.gui.add_folder("Read-only"):
@@ -75,7 +74,7 @@ def main() -> None:
                 marks=((0, "0"), (5, "5"), (7, "7"), 10),
             )
             gui_upload_button = server.gui.add_upload_button(
-                "Upload", icon=viser.Icon.UPLOAD
+                "Upload", icon=rfviser.Icon.UPLOAD
             )
 
     @gui_upload_button.on_upload
