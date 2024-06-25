@@ -555,6 +555,21 @@ export interface GuiAddButtonMessage {
     | null;
   icon_html: string | null;
 }
+/** GuiAddImageViewerMessage(order: 'float', id: 'str', label: 'str', container_id: 'str', hint: 'str', value: 'str', visible: 'bool', disabled: 'bool')
+ *
+ * (automatically generated)
+ */
+export interface GuiAddImageViewerMessage {
+  type: "GuiAddImageViewerMessage";
+  order: number;
+  id: string;
+  label: string;
+  container_id: string;
+  hint: string;
+  value: string;
+  visible: boolean;
+  disabled: boolean;
+}
 /** GuiAddUploadButtonMessage(order: 'float', id: 'str', label: 'str', container_id: 'str', hint: 'Optional[str]', value: 'Any', visible: 'bool', disabled: 'bool', color: 'Optional[Color]', icon_html: 'Optional[str]', mime_type: 'str')
  *
  * (automatically generated)
@@ -1020,6 +1035,7 @@ export type Message =
   | GuiAddTabGroupMessage
   | _GuiAddInputBase
   | GuiAddButtonMessage
+  | GuiAddImageViewerMessage
   | GuiAddUploadButtonMessage
   | GuiAddSliderMessage
   | GuiAddMultiSliderMessage
@@ -1056,6 +1072,7 @@ export type GuiAddComponentMessage =
   | GuiAddPlotlyMessage
   | GuiAddTabGroupMessage
   | GuiAddButtonMessage
+  | GuiAddImageViewerMessage
   | GuiAddUploadButtonMessage
   | GuiAddSliderMessage
   | GuiAddMultiSliderMessage

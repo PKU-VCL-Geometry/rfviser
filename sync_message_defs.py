@@ -19,4 +19,6 @@ if __name__ == "__main__":
     print(f"Wrote to {target_path}")
 
     # Run prettier.
-    subprocess.run(args=["pnpm", "exec", "prettier", str(target_path), "--write"], check=False)
+    subprocess.run(
+        args=["pnpm", "exec", "prettier", str(target_path), "--write"], check=False
+    )

@@ -249,6 +249,14 @@ class GuiButtonHandle(_GuiInputHandle[bool]):
 
 
 @dataclasses.dataclass
+class GuiImageViewerHandle(_GuiInputHandle[str]):
+    """Handle for an image viewer input in our visualizer."""
+
+    value: str
+    """the base64 encoded image to display in the image """
+
+
+@dataclasses.dataclass
 class UploadedFile:
     """Result of a file upload."""
 
