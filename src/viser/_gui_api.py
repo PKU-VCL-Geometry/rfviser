@@ -577,6 +577,52 @@ class GuiApi:
         handle.content = content
         return handle
 
+    def add_image_viewer(
+        self,
+        images: dict[str, str],
+        cameras: dict[str, onp.ndarray] | None = None,
+        order: float | None = None,
+        visible: bool = True,
+    ) -> GuiImageViewerHandle:
+        handle = GuiImageViewerHandle(
+            _gui_api=self,
+            _id=_make_unique_id(),
+            _visible=visible,
+            _parent_container_id=self._get_container_id(),
+            _order=_apply_default_order(order),
+            _images={},
+        )
+
+        if cameras is not None:
+            assert set(cameras.keys()) == set(images.keys())
+            assert all([c2w.shape == (3, 4) for c2w in cameras.values()])
+
+        # Send the image viewer creation message to the client
+        self._websock_interface.queue_message(
+            _messages.GuiAddImageViewerMessage(
+                order=handle._order,
+                id=handle._id,
+                images={},
+                container_id=handle._parent_container_id,
+                visible=visible,
+            )
+        )
+
+        # Logic for processing images is all in the
+        # `.images` setter, which should send a GuiUpdateMessage.
+        if cameras is not None:
+            pad = onp.array([[0.0, 0.0, 0.0, 1.0]])
+            handle.images = {
+                name: (
+                    value,
+                    onp.concatenate((cameras[name], pad), axis=0).T.flatten().tolist(),
+                )
+                for name, value in images.items()
+            }
+        else:
+            handle.images = {name: (value, []) for name, value in images.items()}
+        return handle
+
     def add_plotly(
         self,
         figure: go.Figure,
@@ -701,53 +747,6 @@ class GuiApi:
             )._impl
         )
 
-    def add_image_viewer(
-        self,
-        base_64_image: str,
-        order: float | None = None,
-    ) -> GuiImageViewerHandle:
-        # Create a unique ID for the image viewer
-        id = _make_unique_id()
-        order = _apply_default_order(order)
-
-        # Send the image viewer creation message to the client
-        self._websock_interface.queue_message(
-            _messages.GuiAddImageViewerMessage(
-                order=order,
-                id=id,
-                label="",
-                container_id=self._get_container_id(),
-                hint="This is an image viewer",
-                value=base_64_image,
-                disabled=False,
-                visible=True,
-            )
-        )
-
-        # Create the handle and return it
-        handle = GuiImageViewerHandle(
-            value=base_64_image,
-            _impl=_GuiHandleState(
-                label="",
-                typ=str,
-                gui_api=self,
-                value=base_64_image,
-                update_timestamp=time.time(),
-                parent_container_id=self._get_container_id(),
-                update_cb=[],
-                is_button=False,
-                sync_cb=None,
-                disabled=False,
-                visible=True,
-                id=id,
-                order=order,
-                hint=None,
-                message_type=_messages.GuiAddImageViewerMessage,
-            ),
-        )
-
-        return handle
-
     def add_upload_button(
         self,
         label: str,
@@ -813,7 +812,8 @@ class GuiApi:
         disabled: bool = False,
         hint: str | None = None,
         order: float | None = None,
-    ) -> GuiButtonGroupHandle[TLiteralString]: ...
+    ) -> GuiButtonGroupHandle[TLiteralString]:
+        ...
 
     @overload
     def add_button_group(
@@ -824,7 +824,8 @@ class GuiApi:
         disabled: bool = False,
         hint: str | None = None,
         order: float | None = None,
-    ) -> GuiButtonGroupHandle[TString]: ...
+    ) -> GuiButtonGroupHandle[TString]:
+        ...
 
     def add_button_group(
         self,
@@ -1152,7 +1153,8 @@ class GuiApi:
         visible: bool = True,
         hint: str | None = None,
         order: float | None = None,
-    ) -> GuiDropdownHandle[TLiteralString]: ...
+    ) -> GuiDropdownHandle[TLiteralString]:
+        ...
 
     @overload
     def add_dropdown(
@@ -1164,7 +1166,8 @@ class GuiApi:
         visible: bool = True,
         hint: str | None = None,
         order: float | None = None,
-    ) -> GuiDropdownHandle[TString]: ...
+    ) -> GuiDropdownHandle[TString]:
+        ...
 
     def add_dropdown(
         self,

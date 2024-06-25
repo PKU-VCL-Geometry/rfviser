@@ -1,5 +1,6 @@
 // @refresh reset
 import "@mantine/core/styles.css";
+import '@mantine/carousel/styles.css';
 import "@mantine/notifications/styles.css";
 import "./App.css";
 

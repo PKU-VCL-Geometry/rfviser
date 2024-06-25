@@ -42,7 +42,8 @@ class GuiContainerProtocol(Protocol):
 
 
 class SupportsRemoveProtocol(Protocol):
-    def remove(self) -> None: ...
+    def remove(self) -> None:
+        ...
 
 
 @dataclasses.dataclass
@@ -246,14 +247,6 @@ class GuiButtonHandle(_GuiInputHandle[bool]):
         """Attach a function to call when a button is pressed. Happens in a thread."""
         self._impl.update_cb.append(func)
         return func
-
-
-@dataclasses.dataclass
-class GuiImageViewerHandle(_GuiInputHandle[str]):
-    """Handle for an image viewer input in our visualizer."""
-
-    value: str
-    """the base64 encoded image to display in the image """
 
 
 @dataclasses.dataclass
@@ -670,6 +663,70 @@ class GuiMarkdownHandle:
             GuiUpdateMessage(
                 self._id,
                 {"markdown": _parse_markdown(content, self._image_root)},
+            )
+        )
+
+    @property
+    def order(self) -> float:
+        """Read-only order value, which dictates the position of the GUI element."""
+        return self._order
+
+    @property
+    def visible(self) -> bool:
+        """Temporarily show or hide this GUI element from the visualizer. Synchronized
+        automatically when assigned."""
+        return self._visible
+
+    @visible.setter
+    def visible(self, visible: bool) -> None:
+        if visible == self.visible:
+            return
+
+        self._gui_api._websock_interface.queue_message(
+            GuiUpdateMessage(self._id, {"visible": visible})
+        )
+        self._visible = visible
+
+    def __post_init__(self) -> None:
+        """We need to register ourself after construction for callbacks to work."""
+        parent = self._gui_api._container_handle_from_id[self._parent_container_id]
+        parent._children[self._id] = self
+
+    def remove(self) -> None:
+        """Permanently remove this markdown from the visualizer."""
+        self._gui_api._websock_interface.queue_message(GuiRemoveMessage(self._id))
+
+        parent = self._gui_api._container_handle_from_id[self._parent_container_id]
+        parent._children.pop(self._id)
+
+
+@dataclasses.dataclass
+class GuiImageViewerHandle:
+    """Use to remove images."""
+
+    _gui_api: GuiApi
+    _id: str
+    _visible: bool
+    _parent_container_id: str  # Parent.
+    _order: float
+    _images: dict[str, tuple[str, list[float]]]
+
+    @property
+    def images(self) -> dict[str, tuple[str, list[float]]]:
+        """
+        Current images of this image viewer element.
+        Synchronized automatically when assigned.
+        """
+        assert self._images
+        return self._images
+
+    @images.setter
+    def images(self, images: dict[str, tuple[str, list[float]]]) -> None:
+        self._images = images
+        self._gui_api._websock_interface.queue_message(
+            GuiUpdateMessage(
+                self._id,
+                {"images": self._images},
             )
         )
 

@@ -15,6 +15,7 @@ from typing import (
     Type,
     TypeVar,
     Union,
+    List,
 )
 
 import numpy as onp
@@ -535,6 +536,14 @@ class GuiAddProgressBarMessage(Message):
     value: float
     animated: bool
     color: Optional[Color]
+
+
+@tag_class("GuiAddComponentMessage")
+@dataclasses.dataclass
+class GuiAddImageViewerMessage(Message):
+    order: float
+    id: str
+    images: Dict[str, Tuple[str, List[float]]]
     container_id: str
     visible: bool
 
@@ -596,18 +605,6 @@ class GuiAddButtonMessage(_GuiAddInputBase):
     value: bool
     color: Optional[Color]
     icon_html: Optional[str]
-
-
-@tag_class("GuiAddComponentMessage")
-@dataclasses.dataclass
-class GuiAddImageViewerMessage(_GuiAddInputBase):
-    # All GUI elements currently need an `value` field.
-    # This makes our job on the frontend easier.
-    id: str
-    hint: str
-    label: str
-    disabled: bool
-    value: str
 
 
 @tag_class("GuiAddComponentMessage")
