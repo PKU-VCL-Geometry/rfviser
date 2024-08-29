@@ -6,10 +6,9 @@ we get updates."""
 import time
 
 import numpy as onp
-import rfviser
 from typing_extensions import assert_never
 
-import viser
+import rfviser
 
 
 def main() -> None:

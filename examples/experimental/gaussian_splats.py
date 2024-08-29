@@ -11,8 +11,8 @@ import numpy.typing as onpt
 import tyro
 from plyfile import PlyData
 
-import viser
-from viser import transforms as tf
+import rfviser
+from rfviser import transforms as tf
 
 
 class SplatFile(TypedDict):
@@ -106,7 +106,7 @@ def load_ply_file(ply_file_path: Path, center: bool = False) -> SplatFile:
 
 
 def main(splat_paths: tuple[Path, ...]) -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
     server.gui.configure_theme(dark_mode=True)
     gui_reset_up = server.gui.add_button(
         "Reset up direction",
@@ -114,7 +114,7 @@ def main(splat_paths: tuple[Path, ...]) -> None:
     )
 
     @gui_reset_up.on_click
-    def _(event: viser.GuiEvent) -> None:
+    def _(event: rfviser.GuiEvent) -> None:
         client = event.client
         assert client is not None
         client.camera.up_direction = tf.SO3(client.camera.wxyz) @ onp.array(

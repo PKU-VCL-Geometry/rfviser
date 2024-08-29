@@ -20,8 +20,8 @@ import numpy as np
 import numpy as onp
 import tyro
 
-import viser
-import viser.transforms as tf
+import rfviser
+import rfviser.transforms as tf
 
 
 @dataclass(frozen=True)
@@ -78,7 +78,7 @@ class SmplHelper:
 
 
 def main(model_path: Path) -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
     server.scene.set_up_direction("+y")
     server.gui.configure_theme(control_layout="collapsible")
 
@@ -145,18 +145,18 @@ def main(model_path: Path) -> None:
 class GuiElements:
     """Structure containing handles for reading from GUI elements."""
 
-    gui_rgb: viser.GuiInputHandle[Tuple[int, int, int]]
-    gui_wireframe: viser.GuiInputHandle[bool]
-    gui_betas: List[viser.GuiInputHandle[float]]
-    gui_joints: List[viser.GuiInputHandle[Tuple[float, float, float]]]
-    transform_controls: List[viser.TransformControlsHandle]
+    gui_rgb: rfviser.GuiInputHandle[Tuple[int, int, int]]
+    gui_wireframe: rfviser.GuiInputHandle[bool]
+    gui_betas: List[rfviser.GuiInputHandle[float]]
+    gui_joints: List[rfviser.GuiInputHandle[Tuple[float, float, float]]]
+    transform_controls: List[rfviser.TransformControlsHandle]
 
     changed: bool
     """This flag will be flipped to True whenever the mesh needs to be re-generated."""
 
 
 def make_gui_elements(
-    server: viser.ViserServer,
+    server: rfviser.ViserServer,
     num_betas: int,
     num_joints: int,
     parent_idx: np.ndarray,
@@ -169,7 +169,7 @@ def make_gui_elements(
         out.changed = True  # out is define later!
 
     # GUI elements: mesh settings + visibility.
-    with tab_group.add_tab("View", viser.Icon.VIEWFINDER):
+    with tab_group.add_tab("View", rfviser.Icon.VIEWFINDER):
         gui_rgb = server.gui.add_rgb("Color", initial_value=(90, 200, 255))
         gui_wireframe = server.gui.add_checkbox("Wireframe", initial_value=False)
         gui_show_controls = server.gui.add_checkbox("Handles", initial_value=True)
@@ -183,7 +183,7 @@ def make_gui_elements(
                 control.visible = gui_show_controls.value
 
     # GUI elements: shape parameters.
-    with tab_group.add_tab("Shape", viser.Icon.BOX):
+    with tab_group.add_tab("Shape", rfviser.Icon.BOX):
         gui_reset_shape = server.gui.add_button("Reset Shape")
         gui_random_shape = server.gui.add_button("Random Shape")
 
@@ -206,7 +206,7 @@ def make_gui_elements(
             beta.on_update(set_changed)
 
     # GUI elements: joint angles.
-    with tab_group.add_tab("Joints", viser.Icon.ANGLE):
+    with tab_group.add_tab("Joints", rfviser.Icon.ANGLE):
         gui_reset_joints = server.gui.add_button("Reset Joints")
         gui_random_joints = server.gui.add_button("Random Joints")
 
@@ -224,7 +224,7 @@ def make_gui_elements(
                 quat /= onp.linalg.norm(quat)
                 joint.value = tf.SO3(wxyz=quat).log()
 
-        gui_joints: List[viser.GuiInputHandle[Tuple[float, float, float]]] = []
+        gui_joints: List[rfviser.GuiInputHandle[Tuple[float, float, float]]] = []
         for i in range(num_joints):
             gui_joint = server.gui.add_vector3(
                 label=f"Joint {i}",
@@ -244,7 +244,7 @@ def make_gui_elements(
             set_callback_in_closure(i)
 
     # Transform control gizmos on joints.
-    transform_controls: List[viser.TransformControlsHandle] = []
+    transform_controls: List[rfviser.TransformControlsHandle] = []
     prefixed_joint_names = []  # Joint names, but prefixed with parents.
     for i in range(num_joints):
         prefixed_joint_name = f"joint_{i}"

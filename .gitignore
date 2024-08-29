@@ -14,6 +14,4 @@ htmlcov
 .DS_Store
 .envrc
 .vite
-src/rfviser/client/build
-src/rfviser/client/.nodeenv
 dist
