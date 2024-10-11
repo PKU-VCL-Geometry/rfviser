@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import dataclasses
 import uuid
-from typing import Any, ClassVar, Dict, Optional, Tuple, Type, TypeVar, Union
+from typing import Any, ClassVar, Dict, List, Optional, Tuple, Type, TypeVar, Union
 
 import numpy as np
 import numpy.typing as npt
@@ -1000,6 +1000,23 @@ class GuiButtonMessage(_CreateGuiComponentMessage):
     value: bool
     container_uuid: str
     props: GuiButtonProps
+
+
+@dataclasses.dataclass
+class GuiImageViewerProps:
+    order: float
+    """Order value for arranging GUI elements. Synchronized automatically when assigned."""
+    _images: Dict[str, Tuple[str, List[float]]]
+    """(Private) Images to be displayed. Synchronized automatically when assigned."""
+    visible: bool
+    """Visibility state of the markdown element. Synchronized automatically when assigned."""
+
+
+@dataclasses.dataclass
+class GuiImageViewerMessage(Message, tag="GuiComponentMessage"):
+    uuid: str
+    container_uuid: str
+    props: GuiImageViewerProps
 
 
 @dataclasses.dataclass

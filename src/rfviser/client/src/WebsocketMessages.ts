@@ -1032,6 +1032,20 @@ export interface GuiCloseModalMessage {
   type: "GuiCloseModalMessage";
   uuid: string;
 }
+/** GuiImageViewerMessage(uuid: 'str', container_uuid: 'str', props: 'GuiImageViewerProps')
+ *
+ * (automatically generated)
+ */
+export interface GuiImageViewerMessage {
+  type: "GuiImageViewerMessage";
+  uuid: string;
+  container_uuid: string;
+  props: {
+    order: number;
+    _images: { [key: string]: [string, number[]] };
+    visible: boolean;
+  };
+}
 /** Sent client<->server when any property of a GUI component is changed.
  *
  * (automatically generated)
@@ -1270,6 +1284,7 @@ export type Message =
   | ResetGuiMessage
   | GuiModalMessage
   | GuiCloseModalMessage
+  | GuiImageViewerMessage
   | GuiUpdateMessage
   | SceneNodeUpdateMessage
   | ThemeConfigurationMessage
@@ -1326,7 +1341,8 @@ export type GuiComponentMessage =
   | GuiVector3Message
   | GuiTextMessage
   | GuiDropdownMessage
-  | GuiButtonGroupMessage;
+  | GuiButtonGroupMessage
+  | GuiImageViewerMessage;
 const typeSetSceneNodeMessage = new Set([
   "CameraFrustumMessage",
   "GlbMessage",
@@ -1377,6 +1393,7 @@ const typeSetGuiComponentMessage = new Set([
   "GuiTextMessage",
   "GuiDropdownMessage",
   "GuiButtonGroupMessage",
+  "GuiImageViewerMessage",
 ]);
 export function isGuiComponentMessage(
   message: Message,

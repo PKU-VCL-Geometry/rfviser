@@ -498,6 +498,7 @@ export function SynchronizedCameraControls() {
       <CameraControls
         ref={viewer.cameraControlRef}
         minDistance={0.01}
+        maxDistance={200.0}
         dollySpeed={0.3}
         smoothTime={0.05}
         draggingSmoothTime={0.0}

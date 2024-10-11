@@ -5,6 +5,7 @@ import { GuiComponentContext } from "./GuiComponentContext";
 import { Box } from "@mantine/core";
 import React from "react";
 import ButtonComponent from "../components/Button";
+import ImageViewerComponent from "../components/ImageViewer";
 import SliderComponent from "../components/Slider";
 import NumberInputComponent from "../components/NumberInput";
 import TextInputComponent from "../components/TextInput";
@@ -110,6 +111,8 @@ function GeneratedInput(props: { guiUuid: string }) {
       return <ImageComponent {...conf} />;
     case "GuiButtonMessage":
       return <ButtonComponent {...conf} />;
+    case "GuiImageViewerMessage":
+      return <ImageViewerComponent {...conf} />;
     case "GuiUploadButtonMessage":
       return <UploadButtonComponent {...conf} />;
     case "GuiSliderMessage":

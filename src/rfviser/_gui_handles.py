@@ -16,6 +16,7 @@ from typing import (
     Dict,
     Generic,
     Iterable,
+    List,
     Literal,
     Tuple,
     TypeVar,
@@ -40,6 +41,7 @@ from ._messages import (
     GuiFolderProps,
     GuiHtmlProps,
     GuiImageProps,
+    GuiImageViewerProps,
     GuiMarkdownProps,
     GuiMultiSliderProps,
     GuiNumberProps,
@@ -421,6 +423,29 @@ class GuiButtonHandle(_GuiInputHandle[bool], GuiButtonProps):
         """
         self._impl.update_cb.append(func)
         return func
+
+
+class GuiImageViewerHandle(_GuiHandle[None], GuiImageViewerProps):
+    """Handling for updating and removing image elements."""
+
+    def __init__(
+        self, _impl: _GuiHandleState, _images: Dict[str, Tuple[str, List[float]]]
+    ):
+        super().__init__(_impl=_impl)
+        self._images = _images
+
+    @property
+    def images(self) -> dict[str, tuple[str, list[float]]]:
+        """
+        Current images of this image viewer element.
+        Synchronized automatically when assigned.
+        """
+        assert self._images
+        return self._images
+
+    @images.setter
+    def images(self, images: dict[str, tuple[str, list[float]]]) -> None:
+        self._images = images
 
 
 @dataclasses.dataclass

@@ -43,6 +43,7 @@ from ._gui_handles import (
     GuiFolderHandle,
     GuiHtmlHandle,
     GuiImageHandle,
+    GuiImageViewerHandle,
     GuiMarkdownHandle,
     GuiModalHandle,
     GuiMultiSliderHandle,
@@ -833,6 +834,54 @@ class GuiApi:
                 is_button=True,
             )
         )
+
+    def add_image_viewer(
+        self,
+        images: dict[str, str],
+        cameras: dict[str, np.ndarray] | None = None,
+        visible: bool = True,
+        order: float | None = None,
+    ) -> GuiImageViewerHandle:
+        message = _messages.GuiImageViewerMessage(
+            uuid=_make_uuid(),
+            container_uuid=self._get_container_uuid(),
+            props=_messages.GuiImageViewerProps(
+                order=_apply_default_order(order),
+                _images={},
+                visible=visible,
+            ),
+        )
+        self._websock_interface.queue_message(message)
+
+        if cameras is not None:
+            assert set(cameras.keys()) == set(images.keys())
+            assert all([c2w.shape == (3, 4) for c2w in cameras.values()])
+            pad = np.array([[0.0, 0.0, 0.0, 1.0]])
+            image_dict = {
+                name: (
+                    value,
+                    np.concatenate((cameras[name], pad), axis=0).T.flatten().tolist(),
+                )
+                for name, value in images.items()
+            }
+        else:
+            image_dict = {name: (value, []) for name, value in images.items()}
+
+        handle = GuiImageViewerHandle(
+            _GuiHandleState(
+                message.uuid,
+                self,
+                None,
+                props=message.props,
+                parent_container_id=message.container_uuid,
+            ),
+            _images=image_dict,
+        )
+
+        # Logic for handling images, etc is all in the
+        # `.images` setter, which should send a GuiUpdateMessage.
+        handle._images = image_dict
+        return handle
 
     def add_upload_button(
         self,
