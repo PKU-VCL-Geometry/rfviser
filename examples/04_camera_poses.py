@@ -5,19 +5,19 @@ Example showing how we can detect new clients and read camera poses from them.
 
 import time
 
-import viser
+import rfviser
 
-server = viser.ViserServer()
+server = rfviser.ViserServer()
 server.scene.world_axes.visible = True
 
 
 @server.on_client_connect
-def _(client: viser.ClientHandle) -> None:
+def _(client: rfviser.ClientHandle) -> None:
     print("new client!")
 
     # This will run whenever we get a new camera!
     @client.camera.on_update
-    def _(_: viser.CameraHandle) -> None:
+    def _(_: rfviser.CameraHandle) -> None:
         print(f"New camera on client {client.client_id}!")
 
     # Show the client ID in the GUI.

@@ -10,9 +10,9 @@ import numpy as np
 import trimesh
 import trimesh.creation
 
-import viser
+import rfviser
 
-server = viser.ViserServer()
+server = rfviser.ViserServer()
 
 
 img = np.random.randint(0, 255, size=(1000, 1000, 3), dtype=np.uint8)

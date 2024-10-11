@@ -10,9 +10,9 @@ import numpy as np
 import tyro
 from tqdm.auto import tqdm
 
-import viser
-import viser.extras
-import viser.transforms as tf
+import rfviser
+import rfviser.extras
+import rfviser.transforms as tf
 
 
 def main(
@@ -21,12 +21,12 @@ def main(
     max_frames: int = 100,
     share: bool = False,
 ) -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
     if share:
         server.request_share_url()
 
     print("Loading frames!")
-    loader = viser.extras.Record3dLoader(data_path)
+    loader = rfviser.extras.Record3dLoader(data_path)
     num_frames = min(max_frames, loader.num_frames())
 
     # Add playback UI.
@@ -98,8 +98,8 @@ def main(
         position=(0, 0, 0),
         show_axes=False,
     )
-    frame_nodes: list[viser.FrameHandle] = []
-    point_nodes: list[viser.PointCloudHandle] = []
+    frame_nodes: list[rfviser.FrameHandle] = []
+    point_nodes: list[rfviser.PointCloudHandle] = []
     for i in tqdm(range(num_frames)):
         frame = loader.get_frame(i)
         position, color = frame.get_point_cloud(downsample_factor)

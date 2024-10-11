@@ -4,11 +4,11 @@
 
 import time
 
-import viser
+import rfviser
 
 
 def main() -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
     server.scene.world_axes.visible = True
     gui_up = server.gui.add_vector3(
         "Up Direction",

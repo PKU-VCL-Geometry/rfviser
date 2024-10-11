@@ -4,8 +4,8 @@ Requires yourdfpy and robot_descriptions. Any URDF supported by yourdfpy should 
 - https://github.com/robot-descriptions/robot_descriptions.py
 - https://github.com/clemense/yourdfpy
 
-The :class:`viser.extras.ViserUrdf` is a lightweight interface between yourdfpy
-and viser. It can also take a path to a local URDF file as input.
+The :class:`rfviser.extras.ViserUrdf` is a lightweight interface between yourdfpy
+and rfviser. It can also take a path to a local URDF file as input.
 """
 
 from __future__ import annotations
@@ -17,16 +17,16 @@ import numpy as np
 import tyro
 from robot_descriptions.loaders.yourdfpy import load_robot_description
 
-import viser
-from viser.extras import ViserUrdf
+import rfviser
+from rfviser.extras import ViserUrdf
 
 
 def create_robot_control_sliders(
-    server: viser.ViserServer, viser_urdf: ViserUrdf
-) -> tuple[list[viser.GuiInputHandle[float]], list[float]]:
+    server: rfviser.ViserServer, viser_urdf: ViserUrdf
+) -> tuple[list[rfviser.GuiInputHandle[float]], list[float]]:
     """Create slider for each joint of the robot. We also update robot model
     when slider moves."""
-    slider_handles: list[viser.GuiInputHandle[float]] = []
+    slider_handles: list[rfviser.GuiInputHandle[float]] = []
     initial_config: list[float] = []
     for joint_name, (
         lower,
@@ -68,7 +68,7 @@ def main(
     ] = "panda",
 ) -> None:
     # Start viser server.
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
     server.scene.enable_default_lights(cast_shadow=True)
 
     # Load URDF.

@@ -37,7 +37,7 @@ class ViserTunnel:
         self._multiprocess_ok = _is_multiprocess_ok()
         if not self._multiprocess_ok:
             rich.print(
-                "[bold](viser)[/bold] No `if __name__ == '__main__'` check found; creating share URL tunnel in a thread"
+                "[bold](rfviser)[/bold] No `if __name__ == '__main__'` check found; creating share URL tunnel in a thread"
             )
 
         self._process: mp.Process | None = None
@@ -190,7 +190,7 @@ async def _make_tunnel(
     local_port: int,
     shared_state: DictProxy | dict,
 ) -> None:
-    share_domain = "share.viser.studio"
+    share_domain = "share.rfviser.studio"
 
     import requests
 

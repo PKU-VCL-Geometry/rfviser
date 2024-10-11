@@ -3,21 +3,21 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-exclude = ["src/viser/client/.nodeenv", "src/viser/client/node_modules", "**/__pycache__/**"]
+exclude = ["src/rfviser/client/.nodeenv", "src/rfviser/client/node_modules", "**/__pycache__/**"]
 # Client build is in the gitignore, but we still want it in the distribution.
 ignore-vcs = true
 
 [tool.hatch.version]
-path = "src/viser/__init__.py"
+path = "src/rfviser/__init__.py"
 
 [tool.hatch.build.targets.sdist]
-only-include = ["src/viser"]
+only-include = ["src/rfviser"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/viser"]
+packages = ["src/rfviser"]
 
 [project]
-name = "viser"
+name = "rfviser"
 dynamic = ["version"]
 description = "3D visualization + Python"
 readme = "README.md"
@@ -73,10 +73,10 @@ examples = [
 "GitHub" = "https://github.com/nerfstudio-project/viser"
 
 [project.scripts]
-viser-build-client = "viser._client_autobuild:build_client_entrypoint"
+rfviser-build-client = "rfviser._client_autobuild:build_client_entrypoint"
 
 [tool.pyright]
-exclude = ["./docs/**/*", "./examples/assets/**/*", "./src/viser/client/.nodeenv", "./build"]
+exclude = ["./docs/**/*", "./examples/assets/**/*", "./src/rfviser/client/.nodeenv", "./build"]
 
 [tool.ruff]
 lint.select = [

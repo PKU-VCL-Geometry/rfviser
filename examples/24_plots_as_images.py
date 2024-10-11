@@ -12,8 +12,8 @@ import cv2
 import numpy as np
 import tyro
 
-import viser
-import viser.transforms as vtf
+import rfviser
+import rfviser.transforms as vtf
 
 
 def get_line_plot(
@@ -197,7 +197,7 @@ def create_sine_plot(title: str, counter: int) -> np.ndarray:
 
 
 def main(num_plots: int = 8) -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     # Create GUI elements for display runtimes.
     with server.gui.add_folder("Runtime"):

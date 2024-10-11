@@ -1,4 +1,4 @@
-""":mod:`viser.theme` provides interfaces for themeing the viser
+""":mod:`rfviser.theme` provides interfaces for themeing the rfviser
 frontend from within Python.
 """
 

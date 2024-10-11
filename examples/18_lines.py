@@ -7,11 +7,11 @@ import time
 
 import numpy as np
 
-import viser
+import rfviser
 
 
 def main() -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     # Line segments.
     #

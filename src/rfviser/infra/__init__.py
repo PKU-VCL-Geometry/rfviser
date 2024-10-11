@@ -1,4 +1,4 @@
-""":mod:`viser.infra` provides WebSocket-based communication infrastructure.
+""":mod:`rfviser.infra` provides WebSocket-based communication infrastructure.
 
 We implement abstractions for:
 - Launching a WebSocket+HTTP server on a shared port.
@@ -7,7 +7,7 @@ We implement abstractions for:
 - Defining dataclass-based message types.
 - Translating Python message types to TypeScript interfaces.
 
-These are what `viser` runs on under-the-hood, and generally won't be useful unless
+These are what `rfviser` runs on under-the-hood, and generally won't be useful unless
 you're building a web-based application from scratch.
 """
 

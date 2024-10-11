@@ -5,12 +5,12 @@ Viser includes support for light theming.
 
 import time
 
-import viser
-from viser.theme import TitlebarButton, TitlebarConfig, TitlebarImage
+import rfviser
+from rfviser.theme import TitlebarButton, TitlebarConfig, TitlebarImage
 
 
 def main():
-    server = viser.ViserServer(label="Viser Theming")
+    server = rfviser.ViserServer(label="Viser Theming")
 
     buttons = (
         TitlebarButton(
@@ -55,7 +55,7 @@ def main():
     control_width = server.gui.add_dropdown(
         "Control width", ("small", "medium", "large"), initial_value="medium"
     )
-    synchronize = server.gui.add_button("Apply theme", icon=viser.Icon.CHECK)
+    synchronize = server.gui.add_button("Apply theme", icon=rfviser.Icon.CHECK)
 
     def synchronize_theme() -> None:
         server.gui.configure_theme(

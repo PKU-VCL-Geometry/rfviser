@@ -4,11 +4,11 @@ Examples of adding notifications per client in Viser."""
 
 import time
 
-import viser
+import rfviser
 
 
 def main() -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     persistent_notif_button = server.gui.add_button(
         "Show persistent notification (default)"
@@ -20,7 +20,7 @@ def main() -> None:
     remove_controlled_notif = server.gui.add_button("Remove controlled notification")
 
     @persistent_notif_button.on_click
-    def _(event: viser.GuiEvent) -> None:
+    def _(event: rfviser.GuiEvent) -> None:
         """Show persistent notification when the button is clicked."""
         client = event.client
         assert client is not None
@@ -34,7 +34,7 @@ def main() -> None:
         )
 
     @timed_notif_button.on_click
-    def _(event: viser.GuiEvent) -> None:
+    def _(event: rfviser.GuiEvent) -> None:
         """Show timed notification when the button is clicked."""
         client = event.client
         assert client is not None
@@ -48,7 +48,7 @@ def main() -> None:
         )
 
     @controlled_notif_button.on_click
-    def _(event: viser.GuiEvent) -> None:
+    def _(event: rfviser.GuiEvent) -> None:
         """Show controlled notification when the button is clicked."""
         client = event.client
         assert client is not None
@@ -67,7 +67,7 @@ def main() -> None:
             controlled_notif.remove()
 
     @loading_notif_button.on_click
-    def _(event: viser.GuiEvent) -> None:
+    def _(event: rfviser.GuiEvent) -> None:
         """Show loading notification when the button is clicked."""
         client = event.client
         assert client is not None

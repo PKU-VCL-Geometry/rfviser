@@ -8,15 +8,15 @@ import time
 
 import numpy as np
 
-import viser
-import viser.transforms as tf
+import rfviser
+import rfviser.transforms as tf
 
-server = viser.ViserServer()
+server = rfviser.ViserServer()
 num_frames = 20
 
 
 @server.on_client_connect
-def _(client: viser.ClientHandle) -> None:
+def _(client: rfviser.ClientHandle) -> None:
     """For each client that connects, create GUI elements for adjusting the
     near/far clipping planes."""
 
@@ -39,7 +39,7 @@ def _(client: viser.ClientHandle) -> None:
 
 
 @server.on_client_connect
-def _(client: viser.ClientHandle) -> None:
+def _(client: rfviser.ClientHandle) -> None:
     """For each client that connects, we create a set of random frames + a click handler for each frame.
 
     When a frame is clicked, we move the camera to the corresponding frame.

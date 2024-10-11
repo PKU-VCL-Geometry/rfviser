@@ -9,9 +9,9 @@ relative to /tree.
 import random
 import time
 
-import viser
+import rfviser
 
-server = viser.ViserServer()
+server = rfviser.ViserServer()
 
 while True:
     # Add some coordinate frames to the scene. These will be visualized in the viewer.

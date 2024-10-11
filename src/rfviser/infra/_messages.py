@@ -32,7 +32,7 @@ def _prepare_for_deserialization(value: Any, annotation: Type) -> Any:
         if len(args) >= 2 and args[1] == ...:
             args = (args[0],) * len(value)
         elif len(value) != len(args):
-            warnings.warn(f"[viser] {value} does not match annotation {annotation}")
+            warnings.warn(f"[rfviser] {value} does not match annotation {annotation}")
             return value
 
         for i, v in enumerate(value):
@@ -74,7 +74,9 @@ def _prepare_for_serialization(value: Any, annotation: object) -> Any:
             if len(args) >= 2 and args[1] == ...:
                 args = (args[0],) * len(value)
             elif len(value) != len(args):
-                warnings.warn(f"[viser] {value} does not match annotation {annotation}")
+                warnings.warn(
+                    f"[rfviser] {value} does not match annotation {annotation}"
+                )
                 return value
         else:
             args = [Any] * len(value)

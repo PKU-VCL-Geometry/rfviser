@@ -8,11 +8,11 @@ import time
 import numpy as np
 from typing_extensions import assert_never
 
-import viser
+import rfviser
 
 
 def main() -> None:
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     gui_reset_scene = server.gui.add_button("Reset Scene")
 

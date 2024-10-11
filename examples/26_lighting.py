@@ -9,8 +9,8 @@ from pathlib import Path
 import numpy as np
 import trimesh
 
-import viser
-import viser.transforms as tf
+import rfviser
+import rfviser.transforms as tf
 
 
 def main() -> None:
@@ -24,7 +24,7 @@ def main() -> None:
     print(mesh)
 
     # Start Viser server with mesh.
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
 
     server.scene.add_mesh_simple(
         name="/simple",

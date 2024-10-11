@@ -13,9 +13,9 @@ import numpy as np
 import tyro
 from tqdm.auto import tqdm
 
-import viser
-import viser.transforms as vtf
-from viser.extras.colmap import (
+import rfviser
+import rfviser.transforms as vtf
+from rfviser.extras.colmap import (
     read_cameras_binary,
     read_images_binary,
     read_points3d_binary,
@@ -35,7 +35,7 @@ def main(
         images_path: Path to the COLMAP images directory.
         downsample_factor: Downsample factor for the images.
     """
-    server = viser.ViserServer()
+    server = rfviser.ViserServer()
     server.gui.configure_theme(titlebar_content=None, control_layout="collapsible")
 
     server.scene.enable_default_lights(cast_shadow=True)
@@ -79,7 +79,7 @@ def main(
     server.scene.add_grid(name="/grid", position=(0.0, 0.0, grid_height))
 
     @gui_reset_up.on_click
-    def _(event: viser.GuiEvent) -> None:
+    def _(event: rfviser.GuiEvent) -> None:
         client = event.client
         assert client is not None
         client.camera.up_direction = vtf.SO3(client.camera.wxyz) @ np.array(
@@ -111,10 +111,10 @@ def main(
         colors=colors[point_mask],
         point_size=gui_point_size.value,
     )
-    frames: List[viser.FrameHandle] = []
+    frames: List[rfviser.FrameHandle] = []
 
     def visualize_frames() -> None:
-        """Send all COLMAP elements to viser for visualization. This could be optimized
+        """Send all COLMAP elements to rfviser for visualization. This could be optimized
         a ton!"""
 
         # Remove existing image frames.
@@ -128,7 +128,7 @@ def main(
         img_ids = sorted(img_ids[: gui_frames.value])
 
         def attach_callback(
-            frustum: viser.CameraFrustumHandle, frame: viser.FrameHandle
+            frustum: rfviser.CameraFrustumHandle, frame: rfviser.FrameHandle
         ) -> None:
             @frustum.on_click
             def _(_) -> None:

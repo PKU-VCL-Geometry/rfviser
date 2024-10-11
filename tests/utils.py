@@ -8,7 +8,7 @@ import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
-import viser.transforms as vtf
+import rfviser.transforms as vtf
 
 T = TypeVar("T", bound=vtf.MatrixLieGroup)
 

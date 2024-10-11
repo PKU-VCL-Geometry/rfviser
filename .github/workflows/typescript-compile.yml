@@ -17,6 +17,6 @@ jobs:
           node-version: 20
       - name: Run tsc
         run: |
-          cd src/viser/client
+          cd src/rfviser/client
           yarn
           yarn tsc

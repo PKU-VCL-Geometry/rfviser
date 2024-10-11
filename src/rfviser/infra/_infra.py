@@ -81,13 +81,13 @@ class StateSerializer:
         assert self._handler._record_handle is not None, (
             "serialize() was already called!"
         )
-        import viser
+        import rfviser
 
         packed_bytes = msgspec.msgpack.encode(
             {
                 "durationSeconds": self._time,
                 "messages": self._messages,
-                "viserVersion": viser.__version__,
+                "viserVersion": rfviser.__version__,
             }
         )
         assert isinstance(packed_bytes, bytes)
@@ -404,7 +404,7 @@ class WebsockServer(WebsockMessageHandler):
                 total_connections -= 1
                 if self._verbose:
                     rich.print(
-                        f"[bold](viser)[/bold] Connection closed ({client_id},"
+                        f"[bold](rfviser)[/bold] Connection closed ({client_id},"
                         f" {total_connections} total)"
                     )
 
@@ -526,7 +526,7 @@ class WebsockServer(WebsockMessageHandler):
                     continue
 
         event_loop.run_until_complete(start_server())
-        rich.print("[bold](viser)[/bold] Server stopped")
+        rich.print("[bold](rfviser)[/bold] Server stopped")
 
 
 async def _message_producer(
